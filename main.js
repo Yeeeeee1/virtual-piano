@@ -1,6 +1,7 @@
 let keys = document.querySelectorAll(".piano-key");
 let letters = document.getElementsByClassName("btn-letters")[0];
 let notes = document.getElementsByClassName("btn-notes")[0];
+let fullscreenBtn = document.getElementsByClassName("fullscreen")[0];
 
 let isToggling = false;
 
@@ -41,6 +42,7 @@ for (let i = 0; i < keys.length; i++) {
 }
 
 document.onkeydown = function (e) {
+  if (e.repeat) return;
   for (let i = 0; i < keys.length; i++) {
     if (keys[i].getAttribute("data-letter") == null) {
       continue;
@@ -73,7 +75,7 @@ notes.onclick = function () {
   }
 };
 
-document.getElementsByClassName("fullscreen")[0].addEventListener(
+fullscreenBtn.addEventListener(
   "click",
   function (e) {
     toggleFullScreen();
@@ -83,9 +85,11 @@ document.getElementsByClassName("fullscreen")[0].addEventListener(
 
 function toggleFullScreen() {
   if (!document.fullscreenElement) {
+    fullscreenBtn.style.backgroundImage = "url(assets/fullscreen-exit.svg)";
     document.documentElement.requestFullscreen();
   } else {
     if (document.exitFullscreen) {
+      fullscreenBtn.style.backgroundImage = "url(assets/fullscreen-open.svg)";
       document.exitFullscreen();
     }
   }
